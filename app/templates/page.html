@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+    <h1>{{ folder.replace('_', ' ').title() }}/{{ page_title }}</h1>
+    <a href="{{ url_for('main.folder', folder=folder) }}">back</a>
+    {{ page.html|safe }}
+{% endblock %}

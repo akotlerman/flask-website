@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}All Topics{% endblock %}
+
+{% block body %}
+    <h1>All Topics</h1>
+    {% with folders=folders %}
+        <ul class="list-group">
+            {% for folder in folders %}
+                <li class="list-group-item">
+                    <a href="{{ url_for('main.folder', folder=folder) }}">
+                        <h3>{{ folder.replace('_', ' ').title() }}</h3>
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endwith %}
+{% endblock %}folder

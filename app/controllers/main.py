@@ -61,7 +61,7 @@ def page(folder, path):
 
 @main.route('/<path:folder>/')
 def folder(folder):
-    folder_dict = pages.get_or_404(folder=folder)
+    folder_dict = sorted(pages.get_or_404(folder=folder))
     page_title = folder.replace('_', ' ').title()
     return render_template('folder.html', folder=folder, pages=folder_dict, page_title=page_title)
 

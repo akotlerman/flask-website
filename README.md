@@ -1,24 +1,13 @@
-# Flask Foundation
-[![Build Status](https://travis-ci.org/JackStouffer/Flask-Foundation.png)](https://travis-ci.org/JackStouffer/Flask-Foundation)
+# Shura Kotlerman's Personal Flask Website
 
-There is a cookiecutter version of this repo at [https://github.com/JackStouffer/cookiecutter-Flask-Foundation](https://github.com/JackStouffer/cookiecutter-Flask-Foundation).
+This repo is a Flask App derived from [https://jackstouffer.com/flask-foundation/](https://jackstouffer.com/flask-foundation/). From the README:
 
-Documentation is located at [https://jackstouffer.com/flask-foundation/](https://jackstouffer.com/flask-foundation/)
+> Flask Foundation is a solid foundation for flask applications, built with best practices, that you can easily construct your website/webapp off of. Flask Foundation is different from most Flask frameworks as it does not assume anything about your development or production environments. Flask Foundation is platform agnostic in this respect.
 
-Flask Foundation is a solid foundation for flask applications, built with best practices, that you can easily construct your website/webapp off of. Flask Foundation is different from most Flask frameworks as it does not assume anything about your development or production environments. Flask Foundation is platform agnostic in this respect.
+My blog is currently under development [here](http://shura-kot.herokuapp.com/topics/) and uses a modified version of the [Flask-FlatPages](https://github.com/Flask-FlatPages/Flask-FlatPages) plugin. I have a lot future work for this site including:
 
-Built off of the [bootstrapy project](https://github.com/kirang89/bootstrapy)
++ Integrating the [Flam3](https://github.com/akotlerman/flam3_animation_generator) algorithm.
++ Writing science fiction
++ Teach and bog about other interests such as Math and Python.
 
-Best practices were learned from:
-
-* [Creating Websites With Flask](http://maximebf.com/blog/2012/10/building-websites-in-python-with-flask/)
-* [Getting Bigger With Flask](http://maximebf.com/blog/2012/11/getting-bigger-with-flask/)
-* [Larger Applications With Flask](http://flask.pocoo.org/docs/patterns/packages/).
-
-## License
-
-Flask-Foundation is licensed under the BSD license. For more info see LICENSE.md
-
-# Want to learn more about Flask?
-
-I also wrote a book on Flask! You can order it [here](https://www.packtpub.com/web-development/mastering-flask).
+If you like what I do, feel free to contact me directly at akotlerman@gmail.com

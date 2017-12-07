@@ -9,7 +9,8 @@
             <div class="form-group row">
                 <label for="point-count-input" class="col-3 col-form-label">Point Count</label>
                 <div class="col-md-7">
-                    <input class="form-control" id="point-count-input" type="text" value="3">
+                    <input class="form-control" id="point-count-input" type="number" min="3" max="10" step="1"
+                           data-bind="value:replyNumber" value="3">
                 </div>
             </div>
             <div class="form-group row">
@@ -24,11 +25,31 @@
                     <input class="form-control" type="color" value="#f4a460" id="front-color-input" style="height:38px">
                 </div>
             </div>
+            <!-- Selection Limiter -->
+            <div class="form-group row">
+                <label class="col-4 col-form-label">Selection Limiter</label>
+                <div id="row">
+                    <div class="btn-group" data-toggle="buttons" id="selections">
+                        <label class="btn btn-success">
+                            <input type="checkbox" autocomplete="off" class="selection-checkbox"> <div>0</div>
+                        </label>
+                        <label class="btn btn-success">
+                            <input type="checkbox" autocomplete="off" class="selection-checkbox"> <div>1</div>
+                        </label>
+                        <label class="btn btn-success">
+                            <input type="checkbox" autocomplete="off" class="selection-checkbox"> <div>2</div>
+                        </label>
+                    </div>
+                </div>
+
+            </div>
+            <!-- End Selection Limiter -->
+            <hr>
             <button type="button" class="btn btn-primary btn-lg" href=# id=calculate>Generate Fractal</button>
         </div>
         <div class="col-md-6 float-right">
             <h2>Data Output</h2>
-            <img id="result"></img>
+            <img id="result"/>
         </div>
     </div>
 
@@ -39,16 +60,59 @@
 
         $(function () {
             $('#calculate').bind('click', function () {
+                var selection = new Array;
+                $('.selection-checkbox').each(function () {selection.push(+this.checked);});
                 $.getJSON('{{ url_for('main.gen_flam3') }}', {
                     point_count: $('input#point-count-input').val(),
                     front_color: $('input#front-color-input').val(),
-                    back_color: $('input#back-color-input').val()
+                    back_color: $('input#back-color-input').val(),
+                    selection_limiter: selection.join()
                 }, function (data) {
-                    console.log(data.result)
                     $("#result").attr("src", data.result);
                 });
                 return false;
             });
+        });
+
+        function registerChild(child) {
+            child.change(function () {
+                child.toggleClass('btn-danger');
+            });
+        }
+
+
+        $(function () {
+            $('#point-count-input').change(function () {
+                var point_count = $('input#point-count-input').val();
+                if ($.isNumeric(point_count)) {
+                    var selections = $('#selections');
+                    var cnt = selections.children().length;
+                    var points = parseInt(point_count);
+                    if (points > 0 && points < 11) {
+                        while (cnt < points) {
+                            //Add more boxes
+                            var child = $(selections.children()[0].cloneNode(true));
+                            registerChild(child);
+                            child.children("div")[0].textContent = cnt;
+                            selections.append(child);
+                            cnt = selections.children().length;
+                        }
+                        while (cnt > points) {
+                            selections.children(":last").remove();
+                            cnt = selections.children().length;
+                        }
+                    }
+
+                }
+            });
+        });
+
+        //Initial register children
+        $(function () {
+            $('#selections').children().each(function () {
+                registerChild($(this));
+            });
+            $('#point-count-input').change();
         });
     </script>
 

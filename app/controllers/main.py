@@ -44,10 +44,19 @@ def gen_flam3():
     point_count = request.args.get('point_count', 0, type=int)
     back_color = request.args.get('back_color', "#42426f", type=hex_to_rgb)
     front_color = request.args.get('front_color', "#f4a460", type=hex_to_rgb)
+    selection_limiter = request.args.get('selection_limiter', None, type=str)
     colors = (back_color, front_color)
 
+    print('selection is', selection_limiter)
+    # Make sure selection limiter is sane
+    if selection_limiter is None:
+        selection_limiter = [False]*point_count
+    else:
+        selection_limiter = [bool(int(i)) for i in selection_limiter.split(',')]
+
     # Generate the fractal
-    mat_points = flam3.Fractal(point_count=point_count).execute()
+    print(selection_limiter)
+    mat_points = flam3.Fractal(point_count=point_count, selection_limiter=selection_limiter).execute()
 
     # Convert fractal data to a matrix of color
     img_mat = flam3.point_to_image_mat(mat_points)

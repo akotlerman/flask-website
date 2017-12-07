@@ -1,6 +1,8 @@
 from flask import Blueprint, render_template, flash, request, redirect, url_for, jsonify, abort
 from app.extensions import cache, pages
 from app.tasks import long_task
+import flam3, io, base64, struct
+from PIL import Image
 
 main = Blueprint('main', __name__)
 
@@ -16,11 +18,47 @@ def index():
     return render_template("longtask.html")
 
 
-@main.route('/longtask', methods=['POST'])
-def longtask():
-    task = long_task.apply_async()
-    return jsonify({}), 202, {'Location': url_for('main.taskstatus',
-                                                  task_id=task.id)}
+@main.route('/adder')
+def adder():
+    return render_template("adder.html")
+
+
+@main.route('/api/add_numbers')
+def add_numbers():
+    a = request.args.get('a', 0, type=int)
+    b = request.args.get('b', 0, type=int)
+    return jsonify(result=a + b)
+
+
+@main.route('/flam3')
+def flam3_html():
+    return render_template("flam3.html")
+
+
+def hex_to_rgb(hexstr):
+    return struct.unpack('BBB', b''.fromhex(hexstr[1:]))
+
+
+@main.route('/api/gen_flam3')
+def gen_flam3():
+    point_count = request.args.get('point_count', 0, type=int)
+    back_color = request.args.get('back_color', "#42426f", type=hex_to_rgb)
+    front_color = request.args.get('front_color', "#f4a460", type=hex_to_rgb)
+    colors = (back_color, front_color)
+
+    # Generate the fractal
+    mat_points = flam3.Fractal(point_count=point_count).execute()
+
+    # Convert fractal data to a matrix of color
+    img_mat = flam3.point_to_image_mat(mat_points)
+    img = flam3.mat_to_color(img_mat, colors=colors)
+
+    # Save data to BytesIO file object
+    im = Image.fromarray(img)
+    f = io.BytesIO()
+    im.save(f, format='png')
+    f.seek(0)
+    return jsonify(result="data:image/png;base64,"+base64.b64encode(f.read()).decode())
 
 
 @main.route('/status/<task_id>')

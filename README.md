@@ -10,4 +10,9 @@ My blog is currently under development [here](http://shura-kot.herokuapp.com/top
 + Writing science fiction
 + Teach and bog about other interests such as Math and Python.
 
+## Running this Flask App
+
+The command to run the app is in Procfile for compatibility with Heroku.
+
+
 If you like what I do, feel free to contact me directly at akotlerman@gmail.com

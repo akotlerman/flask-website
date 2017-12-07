@@ -22,4 +22,4 @@ mccabe>=0.3
 flake8>=2.4.0
 
 # Flam3 generator
-git+https://github.com/akotlerman/flam3_animation_generator#egg=flam3gen
+git+https://github.com/akotlerman/flam3_animation_generator#egg=flam3
